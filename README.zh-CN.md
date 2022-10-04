@@ -25,3 +25,7 @@
 - 大部分新的移动版处理器都支持，具体是：英特尔 10 代及以后,；AMD™ Ryzen™ 5000+；高通能装 ARM 版本 Windows 10+ 的都可以。
 
 - 已有大佬用 C# 开发了基于 EcoQos 的 [EnergyStar](https://github.com/imbushuo/EnergyStar)，但它目前还不够好用。
+
+## 下载
+
+[百度网盘](https://pan.baidu.com/s/1oFOBhidFp8NJ75SRU41gnQ?pwd=7dfu)

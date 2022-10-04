@@ -1,0 +1,6 @@
+[submodule "src/deps/umu"]
+	path = src/deps/umu
+	url = https://github.com/UMU618/umu
+[submodule "src/deps/tomlplusplus"]
+	path = src/deps/tomlplusplus
+	url = https://github.com/marzer/tomlplusplus
