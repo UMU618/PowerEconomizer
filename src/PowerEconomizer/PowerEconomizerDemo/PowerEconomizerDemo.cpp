@@ -33,7 +33,7 @@ int main() {
   DWORD minor_version;
   DWORD build_number;
   if (!umutech::pweco::utils::GetNtVersion(&major_version, &minor_version,
-                                           &build_number)) {
+                                           &build_number)) [[unlikely]] {
     umu::console::ColorError(kColorError, _T("Get NT version failed!\n"));
     return EXIT_FAILURE;
   }
@@ -64,15 +64,15 @@ int main() {
   umu::console::Print(
       std::format(_T("\nMain thread ID: {}\n"), g_main_thread_id));
 
-  if (!g_power_economizer.Initialize()) {
+  if (!g_power_economizer.Initialize()) [[unlikely]] {
     return EXIT_FAILURE;
   }
-  if (!g_power_economizer.Run()) {
+  if (!g_power_economizer.Run()) [[unlikely]] {
     return EXIT_FAILURE;
   }
 
   umutech::pweco::ForegroundWindowProcessor fwp;
-  if (!fwp.Run()) {
+  if (!fwp.Run()) [[unlikely]] {
     return EXIT_FAILURE;
   }
 

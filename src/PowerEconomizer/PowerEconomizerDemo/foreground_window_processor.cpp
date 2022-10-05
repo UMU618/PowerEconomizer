@@ -13,14 +13,14 @@ ForegroundWindowProcessor::~ForegroundWindowProcessor() {
 }
 
 bool ForegroundWindowProcessor::Run() noexcept {
-  if (nullptr != win_event_hook_) {
+  if (nullptr != win_event_hook_) [[unlikely]] {
     return true;
   }
   win_event_hook_ =
       SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, nullptr,
                       ForegroundEventProc, 0, 0,
                       WINEVENT_OUTOFCONTEXT | WINEVENT_SKIPOWNPROCESS);
-  if (nullptr == win_event_hook_) {
+  if (nullptr == win_event_hook_) [[unlikely]] {
     umu::console::Error(
         std::format(_T("!SetWinEventHook(), #{}.\n"), GetLastError()));
     return false;

@@ -131,7 +131,7 @@ void PowerEconomizer::Stop() noexcept {
       continue;
     }
     ON_SCOPE_EXIT([&process] { CloseHandle(process); });
-    if (!SetPriorityClass(process, priority_class)) {
+    if (!SetPriorityClass(process, priority_class)) [[unlikely]] {
       continue;
     }
     PROCESS_POWER_THROTTLING_STATE pts{
@@ -139,7 +139,7 @@ void PowerEconomizer::Stop() noexcept {
         .ControlMask = PROCESS_POWER_THROTTLING_EXECUTION_SPEED,
         .StateMask = 0};
     if (!SetProcessInformation(process, ProcessPowerThrottling, &pts,
-                               sizeof(pts))) {
+                               sizeof(pts))) [[unlikely]] {
       continue;
     }
 #if _DEBUG
@@ -166,7 +166,7 @@ void PowerEconomizer::ThrottleAllUserBackgroundProcesses() noexcept {
   ON_SCOPE_EXIT([=] { WTSFreeMemoryEx(WTSTypeProcessInfoLevel1, pi, count); });
 
   for (DWORD i = 0; i < count; ++i) {
-    if (pi[i].ProcessId == pending_pid_) {
+    if (pi[i].ProcessId == pending_pid_) [[unlikely]] {
 #if _DEBUG
       umu::console::Print(std::format(_T("Bypass process `{}':{}.\n"),
                                       pi[i].pProcessName, pi[i].ProcessId));
@@ -204,7 +204,7 @@ void PowerEconomizer::ThrottleAllUserBackgroundProcesses() noexcept {
       continue;
     }
 
-    if (EnableEcoMode(process, true, pi[i].ProcessId)) {
+    if (EnableEcoMode(process, true, pi[i].ProcessId)) [[likely]] {
       umu::console::Print(
           std::format(_T("Enable EcoQoS for process `{}':{}.\n"),
                       pi[i].pProcessName, pi[i].ProcessId));
@@ -214,7 +214,7 @@ void PowerEconomizer::ThrottleAllUserBackgroundProcesses() noexcept {
 
 void PowerEconomizer::HandleForegroundWindow(HWND window) noexcept {
   auto [tid, pid, process] = utils::OpenWindowProcess(window);
-  if (0 == tid) {
+  if (0 == tid) [[unlikely]] {
     umu::console::Error(std::format(_T("!GetWindowThreadProcessId({}), #{}.\n"),
                                     static_cast<void*>(window),
                                     GetLastError()));
@@ -228,7 +228,7 @@ void PowerEconomizer::HandleForegroundWindow(HWND window) noexcept {
   ON_SCOPE_EXIT([&process] { CloseHandle(process); });
 
   CString process_name = utils::GetProcessName(process);
-  if (process_name.IsEmpty()) {
+  if (process_name.IsEmpty()) [[unlikely]] {
     umu::console::Error(
         std::format(_T("!GetProcessName({}), #{}.\n"), pid, GetLastError()));
     return;
@@ -295,7 +295,7 @@ void PowerEconomizer::HandleForegroundWindow(HWND window) noexcept {
     HANDLE previous_process =
         OpenProcess(PROCESS_SET_INFORMATION, FALSE, pending_pid_);
     if (nullptr != previous_process) {
-      if (EnableEcoMode(previous_process, false, pending_pid_)) {
+      if (EnableEcoMode(previous_process, false, pending_pid_)) [[likely]] {
         umu::console::Print(std::format(_T("Throttle `{}':{}\n"),
                                         pending_process_name_, pending_pid_));
       }
@@ -326,12 +326,12 @@ bool PowerEconomizer::EnableEcoMode(HANDLE process,
   if (enable) {
     pts.StateMask = PROCESS_POWER_THROTTLING_EXECUTION_SPEED;
     if (!SetProcessInformation(process, ProcessPowerThrottling, &pts,
-                               sizeof(pts))) {
+                               sizeof(pts))) [[unlikely]] {
       return false;
     }
 
     DWORD priority_class = GetPriorityClass(process);
-    if (!SetPriorityClass(process, IDLE_PRIORITY_CLASS)) {
+    if (!SetPriorityClass(process, IDLE_PRIORITY_CLASS)) [[unlikely]] {
       return false;
     }
     process_priority_class_.insert({pid, priority_class});
@@ -346,13 +346,13 @@ bool PowerEconomizer::EnableEcoMode(HANDLE process,
           _T("  Restore process {} priority class {}\n"), pid, priority_class));
 #endif
     }
-    if (!SetPriorityClass(process, priority_class)) {
+    if (!SetPriorityClass(process, priority_class)) [[unlikely]] {
       return false;
     }
 
     pts.StateMask = 0;
     if (!SetProcessInformation(process, ProcessPowerThrottling, &pts,
-                               sizeof(pts))) {
+                               sizeof(pts))) [[unlikely]] {
       return false;
     }
   }
@@ -370,7 +370,7 @@ bool PowerEconomizer::LoadConfig() noexcept {
   }
   ULONGLONG file_size = 0;
   hr = file.GetSize(file_size);
-  if (FAILED(hr)) {
+  if (FAILED(hr)) [[unlikely]] {
     return false;
   }
   if (16 * 1024 * 1024 < file_size) {
@@ -383,7 +383,7 @@ bool PowerEconomizer::LoadConfig() noexcept {
   buffer.resize(file_size);
   DWORD read_size = 0;
   hr = file.Read(buffer.data(), utils::NarrowCast<DWORD>(file_size), read_size);
-  if (FAILED(hr)) {
+  if (FAILED(hr)) [[unlikely]] {
     return false;
   }
   buffer.resize(read_size);

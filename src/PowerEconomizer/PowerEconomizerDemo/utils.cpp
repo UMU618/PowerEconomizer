@@ -17,8 +17,8 @@ bool EnableEcoMode(HANDLE process, bool enable) noexcept {
                              sizeof(pts))) {
     return false;
   }
-  if (!SetPriorityClass(process,
-                        enable ? IDLE_PRIORITY_CLASS : NORMAL_PRIORITY_CLASS)) {
+  if (!SetPriorityClass(process, enable ? IDLE_PRIORITY_CLASS
+                                        : NORMAL_PRIORITY_CLASS)) [[unlikely]] {
     return false;
   }
   return true;
@@ -27,13 +27,13 @@ bool EnableEcoMode(HANDLE process, bool enable) noexcept {
 bool GetNtVersion(DWORD* major, DWORD* minor, DWORD* build_number) noexcept {
   umu::Module ntdll;
   DWORD ec = ntdll.GetOrLoad(L"ntdll.dll");
-  if (NO_ERROR != ec) {
+  if (NO_ERROR != ec) [[unlikely]] {
     umu::console::Error(std::format(_T("Load ntdll.dll failed with {}\n"), ec));
     return false;
   }
   auto proc = reinterpret_cast<void(WINAPI*)(DWORD*, DWORD*, DWORD*)>(
       GetProcAddress(ntdll, "RtlGetNtVersionNumbers"));
-  if (!proc) {
+  if (!proc) [[unlikely]] {
     umu::console::Error(_T("No RtlGetNtVersionNumbers\n"));
     return false;
   }
@@ -46,7 +46,8 @@ CString GetProcessName(HANDLE process) noexcept {
   DWORD length = 1024;
   CString name;
 
-  if (QueryFullProcessImageName(process, 0, name.GetBuffer(length), &length)) {
+  if (QueryFullProcessImageName(process, 0, name.GetBuffer(length), &length))
+      [[likely]] {
     name.ReleaseBuffer(length);
     CPath path(name);
     return name.Mid(path.FindFileName());
@@ -76,7 +77,7 @@ bool IsUserAdmin() noexcept {
 std::tuple<DWORD, DWORD, HANDLE> OpenWindowProcess(HWND window) noexcept {
   DWORD pid = 0;
   DWORD tid = GetWindowThreadProcessId(window, &pid);
-  if (0 == tid) {
+  if (0 == tid) [[unlikely]] {
     return {tid, pid, nullptr};
   }
   HANDLE process = OpenProcess(
