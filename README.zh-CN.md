@@ -29,3 +29,13 @@
 ## 下载
 
 [百度网盘](https://pan.baidu.com/s/1oFOBhidFp8NJ75SRU41gnQ?pwd=7dfu)
+
+## 关于发布版
+
+TestSign cert
+
+CN=umu618.com
+
+Fingerprint(指纹): ff8a8160116e35775506d0dd86360935877aaf3b
+
+[详情](https://blog.umu618.com/about/cert.html)

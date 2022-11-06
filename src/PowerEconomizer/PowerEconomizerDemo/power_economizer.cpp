@@ -82,8 +82,8 @@ bool PowerEconomizer::Initialize() noexcept {
   for (std::size_t i = 0; i < std::size(processes); ++i) {
     CString process_name{processes[i]};
 #if _DEBUG
-    umu::console::Print(
-        std::format(_T("Add process `{}' to bypass list.\n"), process_name));
+    umu::console::Print(std::format(
+        _T("Add built-in process `{}' to bypass list.\n"), process_name));
 #endif
     bypass_processes_.insert(utils::ToStd(process_name.MakeLower()));
   }

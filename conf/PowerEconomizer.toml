@@ -1,0 +1,2 @@
+[config]
+bypass_process_list = ['devenv.exe', 'msiexec.exe']
