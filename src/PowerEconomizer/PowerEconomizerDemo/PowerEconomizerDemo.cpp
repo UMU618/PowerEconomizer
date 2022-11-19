@@ -41,7 +41,7 @@ int main() {
   build_number &= 0xffff;
   bool supported = false;
 
-  if (10 <= major_version && 22000 <= build_number) {
+  if ((10 == major_version && 22000 <= build_number) || 10 < major_version) {
     supported = true;
   }
 
