@@ -48,7 +48,7 @@ int main() {
   umu::console::Print(std::format(_T("OS version: {}.{}.{}, "), major_version,
                                   minor_version, build_number));
   if (!supported) {
-    umu::console::ColorPrint(kColorNo, _T("unsupported"));
+    umu::console::ColorPrint(kColorNo, _T("unsupported\n"));
     return EXIT_FAILURE;
   }
   umu::console::ColorPrint(kColorYes, _T("supported"));
