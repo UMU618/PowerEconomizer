@@ -295,7 +295,7 @@ void PowerEconomizer::HandleForegroundWindow(HWND window) noexcept {
     HANDLE previous_process =
         OpenProcess(PROCESS_SET_INFORMATION, FALSE, pending_pid_);
     if (nullptr != previous_process) {
-      if (EnableEcoMode(previous_process, false, pending_pid_)) [[likely]] {
+      if (EnableEcoMode(previous_process, true, pending_pid_)) [[likely]] {
         umu::console::Print(std::format(_T("Throttle `{}':{}\n"),
                                         pending_process_name_, pending_pid_));
       }
