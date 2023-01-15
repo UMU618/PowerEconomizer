@@ -4,3 +4,6 @@
 [submodule "src/deps/tomlplusplus"]
 	path = src/deps/tomlplusplus
 	url = https://github.com/marzer/tomlplusplus
+[submodule "src/deps/GSL"]
+	path = src/deps/GSL
+	url = https://github.com/microsoft/GSL

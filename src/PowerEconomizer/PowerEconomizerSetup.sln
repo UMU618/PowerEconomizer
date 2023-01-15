@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "PowerEconomizerSetup", "PowerEconomizerSetup\PowerEconomizerSetup.wixproj", "{DFE2C254-4C4B-4AC5-A9AC-E85B2FFE02E7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DFE2C254-4C4B-4AC5-A9AC-E85B2FFE02E7}.Debug|x64.ActiveCfg = Debug|x64
+		{DFE2C254-4C4B-4AC5-A9AC-E85B2FFE02E7}.Debug|x64.Build.0 = Debug|x64
+		{DFE2C254-4C4B-4AC5-A9AC-E85B2FFE02E7}.Release|x64.ActiveCfg = Release|x64
+		{DFE2C254-4C4B-4AC5-A9AC-E85B2FFE02E7}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C85114B9-A75A-499F-98EA-9F90FF0D363C}
+	EndGlobalSection
+EndGlobal

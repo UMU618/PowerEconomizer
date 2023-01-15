@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="zh-CN" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+    <String Id="ProductName">超抠</String>
+    <String Id="ErrorDowngrade">更新版本的 [ProductName] 已经安装，如需降级，请先卸载新版本。</String>
+    <String Id="ErrorRequireWin10">本程序需要 Windows 10 或以上系统。</String>
+    <String Id="MainProgram">主程序</String>
+    <String Id="DesktopShortcut">桌面快捷方式</String>
+    <String Id="StartMenuShortcut">开始菜单快捷方式</String>
+    <String Id="StartupShortcut">自启动</String>
+    <String Id="EXITDIALOGOPTIONALCHECKBOXTEXT">运行!(loc.ProductName)</String>
+    <String Id="Uninstall">卸载!(loc.ProductName)</String>
+</WixLocalization>
