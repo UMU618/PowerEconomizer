@@ -1,0 +1,8 @@
+TestSign cert
+
+CN=umu618.com
+Fingerprint(指纹): ff8a8160116e35775506d0dd86360935877aaf3b
+
+https://blog.umu618.com/cert/
+https://github.com/UMU618/nv-video-info
+https://github.com/UMU618/PowerEconomizer

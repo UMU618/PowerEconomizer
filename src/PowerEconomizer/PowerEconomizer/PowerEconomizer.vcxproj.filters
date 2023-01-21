@@ -21,6 +21,12 @@
     <ClCompile Include="src\app.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\auto_run.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\auto_run.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\blur.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

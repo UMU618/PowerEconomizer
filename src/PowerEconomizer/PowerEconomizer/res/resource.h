@@ -16,6 +16,7 @@
 #define IDC_BUTTON_VIEW_LOG             1007
 #define IDC_BUTTON_FREE_CONSOLE         1008
 #define IDC_ELEVATE                     1009
+#define ID_SHELL_LAUNCH_AT_LOGIN        40000
 #define ID_SHELL_OPEN                   40001
 #define ID_BLUR_ACRYLIC_BLUR            40002
 #define ID_BLUR_BLUR                    40003
@@ -32,7 +33,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        106
-#define _APS_NEXT_COMMAND_VALUE         40011
+#define _APS_NEXT_COMMAND_VALUE         40013
 #define _APS_NEXT_CONTROL_VALUE         1010
 #define _APS_NEXT_SYMED_VALUE           102
 #endif

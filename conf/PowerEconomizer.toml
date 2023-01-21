@@ -1,2 +1,2 @@
 [config]
-bypass_process_list = ['devenv.exe', 'msiexec.exe']
+bypass_process_list = ['b2.exe', 'devenv.exe', 'msiexec.exe']

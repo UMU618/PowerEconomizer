@@ -132,6 +132,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <EnableModules>true</EnableModules>
       <TreatAngleIncludeAsExternal>true</TreatAngleIncludeAsExternal>
+      <AdditionalOptions>/DNOMINMAX %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -153,6 +154,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <EnableModules>true</EnableModules>
       <TreatAngleIncludeAsExternal>true</TreatAngleIncludeAsExternal>
+      <AdditionalOptions>/DNOMINMAX %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -177,6 +179,7 @@
       <EnableModules>true</EnableModules>
       <TreatAngleIncludeAsExternal>true</TreatAngleIncludeAsExternal>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/DNOMINMAX %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -198,6 +201,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <EnableModules>true</EnableModules>
       <TreatAngleIncludeAsExternal>true</TreatAngleIncludeAsExternal>
+      <AdditionalOptions>/DNOMINMAX %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -219,6 +223,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <EnableModules>true</EnableModules>
       <TreatAngleIncludeAsExternal>true</TreatAngleIncludeAsExternal>
+      <AdditionalOptions>/DNOMINMAX %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -243,6 +248,7 @@
       <EnableModules>true</EnableModules>
       <TreatAngleIncludeAsExternal>true</TreatAngleIncludeAsExternal>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/DNOMINMAX %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -257,6 +263,8 @@
   <ItemGroup>
     <ClCompile Include="src\app.cpp" />
     <ClCompile Include="src\app.ixx" />
+    <ClCompile Include="src\auto_run.cpp" />
+    <ClCompile Include="src\auto_run.ixx" />
     <ClCompile Include="src\blur.cpp" />
     <ClCompile Include="src\blur.ixx" />
     <ClCompile Include="src\blur_window.cpp" />

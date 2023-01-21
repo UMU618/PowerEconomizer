@@ -17,7 +17,7 @@
     <?endif ?>
     <?define Manufacturer = "UMUTech" ?>
     <?define ProductId = "PowerEconomizer" ?>
-    <?define Version = "23.1.14.0" ?>
+    <?define Version = "23.1.21.0" ?>
     <?define UpgradeCode = "beda5964-1224-4140-81b5-9ff257e11e6d" ?>
 
     <Product Id="*" Name="!(loc.ProductName)" Language="1033" Version="$(var.Version)" Manufacturer="$(var.Manufacturer)" UpgradeCode="$(var.UpgradeCode)">
@@ -111,7 +111,7 @@
         <ComponentGroup Id="ProductComponents">
             <Component Id="ProductComponent" Directory="INSTALLFOLDER" Guid="98BD59D2-CE03-448B-A26D-2FF7766BA927" Win64="$(var.Win64)">
                 <File Name="LICENSE.rtf" Source="$(var.ProjectDir)LICENSE.rtf" />
-                <File Name="PowerEconomizer.exe" Source="$(var.SolutionDir)bin\$(var.ArchDir)\MTRelease\PowerEconomizer.exe" />
+                <File Name="PowerEconomizer.exe" Source="$(var.ProjectDir)..\..\..\conf\PowerEconomizer.exe" />
                 <File Name="PowerEconomizer.toml" Source="$(var.ProjectDir)..\..\..\conf\PowerEconomizer.toml" />
             </Component>
         </ComponentGroup>
