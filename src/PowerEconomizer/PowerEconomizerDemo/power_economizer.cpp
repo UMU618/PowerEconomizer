@@ -17,6 +17,10 @@ constexpr std::basic_string_view kUwpFrameHostApp{
     _T("ApplicationFrameHost.exe")};
 constexpr UINT_PTR kTimerId = 'MZPE';
 
+std::basic_string_view<TCHAR> CS2SV(const CString& cs) noexcept {
+  return {cs.GetString(), static_cast<std::size_t>(cs.GetLength())};
+}
+
 }  // namespace
 
 namespace umutech::pweco {
@@ -31,7 +35,7 @@ bool PowerEconomizer::Initialize() noexcept {
   CString myself = utils::GetProcessName(GetCurrentProcess());
   if (!myself.IsEmpty()) {
     umu::console::Print(
-        std::format(_T("Add process `{}' to bypass list.\n"), myself));
+        std::format(_T("Add process `{}' to bypass list.\n"), CS2SV(myself)));
     bypass_processes_.insert(utils::ToStd(myself.MakeLower()));
   }
 
@@ -227,6 +231,11 @@ void PowerEconomizer::HandleForegroundWindow(HWND window) noexcept {
   }
   ON_SCOPE_EXIT([&process] { CloseHandle(process); });
 
+  if (pid == pending_pid_) {
+    umu::console::Print(std::format(_T("Still process {}\n"), pid));
+    return;
+  }
+
   CString process_name = utils::GetProcessName(process);
   if (process_name.IsEmpty()) [[unlikely]] {
     umu::console::Error(
@@ -286,7 +295,7 @@ void PowerEconomizer::HandleForegroundWindow(HWND window) noexcept {
   if (!bypass) {
     if (EnableEcoMode(process, false, pid)) {
       umu::console::Print(
-          std::format(_T("Boost `{}':{}\n"), process_name, pid));
+          std::format(_T("Boost `{}':{}\n"), CS2SV(process_name), pid));
     }
   }
 
@@ -297,15 +306,16 @@ void PowerEconomizer::HandleForegroundWindow(HWND window) noexcept {
     if (nullptr != previous_process) {
       if (EnableEcoMode(previous_process, true, pending_pid_)) [[likely]] {
         umu::console::Print(std::format(_T("Throttle `{}':{}\n"),
-                                        pending_process_name_, pending_pid_));
+                                        CS2SV(pending_process_name_),
+                                        pending_pid_));
       }
       CloseHandle(previous_process);
       pending_pid_ = 0;
     } else {
       int ec = GetLastError();
       umu::console::Error(std::format(_T("!OpenProcess(`{}':{}), #{}.\n"),
-                                      pending_process_name_, pending_pid_,
-                                      GetLastError()));
+                                      CS2SV(pending_process_name_),
+                                      pending_pid_, GetLastError()));
     }
   }
 
@@ -403,15 +413,16 @@ bool PowerEconomizer::LoadConfig() noexcept {
   toml::table::const_iterator iter = t.find("config");
   if (iter == t.cend() || !iter->second.is_table()) {
     umu::console::ColorError(
-        kColorError, std::format(_T("No [config] in `{}'\n"), config_path));
+        kColorError,
+        std::format(_T("No [config] in `{}'\n"), CS2SV(config_path)));
     return false;
   }
   auto c = iter->second.as_table();
   auto bypass = (*c)["bypass_process_list"];
   if (!bypass.is_array()) {
     umu::console::ColorError(
-        kColorError,
-        std::format(_T("Invalid bypass_process_list in `{}'\n"), config_path));
+        kColorError, std::format(_T("Invalid bypass_process_list in `{}'\n"),
+                                 CS2SV(config_path)));
     return false;
   }
 
