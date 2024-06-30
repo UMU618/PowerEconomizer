@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<WixLocalization Culture="en-US" xmlns="http://schemas.microsoft.com/wix/2006/localization">
-    <String Id="ProductName">PowerEconomizer</String>
-    <String Id="ErrorDowngrade">A newer version of [ProductName] is already installed.</String>
-    <String Id="ErrorRequireWin10">This application can only be installed on Windows 10+.</String>
-    <String Id="MainProgram">Main program</String>
-    <String Id="DesktopShortcut">Desktop shortcut</String>
-    <String Id="StartMenuShortcut">Start Menu shortcut</String>
-    <String Id="StartupShortcut">Run automatically at startup</String>
-    <String Id="EXITDIALOGOPTIONALCHECKBOXTEXT">Launch !(loc.ProductName)</String>
-    <String Id="Uninstall">Uninstall !(loc.ProductName)</String>
+﻿<WixLocalization Culture="en-US" xmlns="http://wixtoolset.org/schemas/v4/wxl">
+  <String Id="ProductName" Value="PowerEconomizer" />
+  <String Id="ErrorDowngrade" Value="A newer version of [ProductName] is already installed." />
+  <String Id="ErrorRequireWin10" Value="This application can only be installed on Windows 10+." />
+  <String Id="MainProgram" Value="Main program" />
+  <String Id="DesktopShortcut" Value="Desktop shortcut" />
+  <String Id="StartMenuShortcut" Value="Start Menu shortcut" />
+  <String Id="StartupShortcut" Value="Run automatically at startup" />
+  <String Id="EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch !(loc.ProductName)" />
+  <String Id="Uninstall" Value="Uninstall !(loc.ProductName)" />
 </WixLocalization>

@@ -1,148 +1,125 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-    <?if $(var.Platform) = x64 ?>
-    <?define ArchDir = "x64" ?>
-    <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
-    <?define SystemDir = "[System64Folder]" ?>
-    <?define SystemVersion = "VersionNT64" ?>
-    <?define Win64 = "yes" ?>
-    <?define WixQuietExec="WixQuietExec64"?>
-    <?else ?>
-    <?define ArchDir = "x86" ?>
-    <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
-    <?define SystemDir = "[SystemFolder]" ?>
-    <?define SystemVersion = "VersionNT" ?>
-    <?define Win64 = "no" ?>
-    <?define WixQuietExec="WixQuietExec"?>
-    <?endif ?>
-    <?define Manufacturer = "UMUTech" ?>
-    <?define ProductId = "PowerEconomizer" ?>
-    <?define Version = "23.1.21.0" ?>
-    <?define UpgradeCode = "beda5964-1224-4140-81b5-9ff257e11e6d" ?>
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+  <?if $(var.Platform) = x64 ?>
+  <?define ArchDir = "x64" ?>
+  <?define SystemDir = "[System64Folder]" ?>
+  <?define SystemVersion = "VersionNT64" ?>
+  <?define WixQuietExec="WixQuietExec64"?>
+  <?else?>
+  <?define ArchDir = "x86" ?>
+  <?define SystemDir = "[SystemFolder]" ?>
+  <?define SystemVersion = "VersionNT" ?>
+  <?define WixQuietExec="WixQuietExec"?>
+  <?endif?>
+  <?define Manufacturer = "UMUTech" ?>
+  <?define ProductId = "PowerEconomizer" ?>
+  <?define Version = "24.6.30.0" ?>
+  <?define UpgradeCode = "beda5964-1224-4140-81b5-9ff257e11e6d" ?>
 
-    <Product Id="*" Name="!(loc.ProductName)" Language="1033" Version="$(var.Version)" Manufacturer="$(var.Manufacturer)" UpgradeCode="$(var.UpgradeCode)">
-        <Package InstallerVersion="200" Compressed="yes" InstallScope="perUser" />
+  <Package Name="!(loc.ProductName)" Language="1033" Version="$(var.Version)" Manufacturer="$(var.Manufacturer)" UpgradeCode="$(var.UpgradeCode)" InstallerVersion="200" Scope="perUser">
+    <MajorUpgrade DowngradeErrorMessage="!(loc.ErrorDowngrade)" />
+    <MediaTemplate EmbedCab="yes" />
 
-        <MajorUpgrade DowngradeErrorMessage="!(loc.ErrorDowngrade)" />
-        <MediaTemplate EmbedCab="yes" />
-
-        <!-- https://stackoverflow.com/a/31991006 -->
-        <!--<Property Id="WIN10FOUND">
+    <!-- https://stackoverflow.com/a/31991006 -->
+    <!--<Property Id="WIN10FOUND">
             <DirectorySearch Id="searchSystem" Path="$(var.SystemDir)" Depth="0">
                 <FileSearch Id="searchFile" Name="advapi32.dll" MinVersion="6.3.10000.0"/>
             </DirectorySearch>
         </Property>-->
 
-        <!-- https://stackoverflow.com/a/23061358 -->
-        <Condition Message="!(loc.ErrorRequireWin10)">
-            <![CDATA[Installed or ($(var.SystemVersion) >= 603)]]>
-        </Condition>
+    <!-- https://stackoverflow.com/a/23061358 -->
+    <Launch Condition="Installed or ($(var.SystemVersion) &gt;= 603)" Message="!(loc.ErrorRequireWin10)" />
 
-        <Feature Id="ProductFeature" Display="expand" Title="!(loc.ProductName)" Level="1" Absent="disallow" InstallDefault="local">
-            <Feature Id="ProgramFeature" Title="!(loc.MainProgram)" Absent="disallow">
-                <ComponentGroupRef Id="ProductComponents" Primary="yes" />
-            </Feature>
-            <Feature Id="DesktopShortcutFeature" Title="!(loc.DesktopShortcut)">
-                <ComponentRef Id="DesktopShortcutComponent" />
-            </Feature>
-            <Feature Id="StartMenuShortcutFeature" Title="!(loc.StartMenuShortcut)">
-                <ComponentRef Id="StartMenuShortcutComponent" />
-            </Feature>
-            <Feature Id="StartupShortcutFeature" Title="!(loc.StartupShortcut)">
-                <ComponentRef Id="StartupShortcutComponent" />
-            </Feature>
-        </Feature>
+    <Feature Id="ProductFeature" Display="expand" Title="!(loc.ProductName)" Level="1" InstallDefault="local" AllowAbsent="no">
+      <Feature Id="ProgramFeature" Title="!(loc.MainProgram)" AllowAbsent="no">
+        <ComponentGroupRef Id="ProductComponents" Primary="yes" />
+      </Feature>
+      <Feature Id="DesktopShortcutFeature" Title="!(loc.DesktopShortcut)">
+        <ComponentRef Id="DesktopShortcutComponent" />
+      </Feature>
+      <Feature Id="StartMenuShortcutFeature" Title="!(loc.StartMenuShortcut)">
+        <ComponentRef Id="StartMenuShortcutComponent" />
+      </Feature>
+      <Feature Id="StartupShortcutFeature" Title="!(loc.StartupShortcut)">
+        <ComponentRef Id="StartupShortcutComponent" />
+      </Feature>
+    </Feature>
 
-        <!-- set setup icon and uninstall options -->
-        <Icon Id="PE.ico" SourceFile="$(var.ProjectDir)..\res\PE.ico" />
+    <!-- set setup icon and uninstall options -->
+    <Icon Id="PE.ico" SourceFile="$(var.ProjectDir)..\res\PE.ico" />
 
-        <Property Id="ARPPRODUCTICON" Value="PE.ico" />
-        <Property Id="ARPURLINFOABOUT" Value="https://github.com/UMU618/PowerEconomizer" />
-        <!--<Property Id="ARPNOMODIFY" Value="yes" Secure="yes" />-->
-        <!--<Property Id="ARPNOREPAIR" Value="yes" Secure="yes" />-->
-        <Property Id="ALLUSERS" Secure="yes" Value="2"/>
-        <Property Id="MSIINSTALLPERUSER" Secure="yes" Value="1" />
-        <!--<Property Id="ApplicationFolderName" Value="$(var.ProductId)" />
+    <Property Id="ARPPRODUCTICON" Value="PE.ico" />
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/UMU618/PowerEconomizer" />
+    <!--<Property Id="ARPNOMODIFY" Value="yes" Secure="yes" />-->
+    <!--<Property Id="ARPNOREPAIR" Value="yes" Secure="yes" />-->
+    <Property Id="ALLUSERS" Secure="yes" Value="2" />
+    <Property Id="MSIINSTALLPERUSER" Secure="yes" Value="1" />
+    <!--<Property Id="ApplicationFolderName" Value="$(var.ProductId)" />
         <Property Id="WixAppFolder" Value="WixPerUserFolder" />-->
-        <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
-        <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="!(loc.EXITDIALOGOPTIONALCHECKBOXTEXT)" />
-        <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="!(loc.EXITDIALOGOPTIONALCHECKBOXTEXT)" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
 
-        <!-- use LICENSE as EULA, not technically an EULA but for now it has to do -->
-        <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)LICENSE.rtf" />
-        <WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)WixUIBanner.bmp" />
-        <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)WixUIDialog.bmp" />
-        <!--<WixVariable Id="WixUISupportPerMachine" Value="0" />-->
-        <!--<WixVariable Id="WixUISupportPerUser" Value="0" />-->
+    <!-- use LICENSE as EULA, not technically an EULA but for now it has to do -->
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)LICENSE.rtf" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)WixUIBanner.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)WixUIDialog.bmp" />
+    <!--<WixVariable Id="WixUISupportPerMachine" Value="0" />-->
+    <!--<WixVariable Id="WixUISupportPerUser" Value="0" />-->
 
-        <!--<UIRef Id="WixUI_Advanced" />-->
-        <UIRef Id="WixUI_FeatureTree" />
-        <!--<UIRef Id="WixUI_InstallDir" />-->
-        <UIRef Id="WixUI_ErrorProgressText" />
+    <!--<UIRef Id="WixUI_Advanced" />-->
+    <ui:WixUI Id="WixUI_FeatureTree" />
+    <!--<UIRef Id="WixUI_InstallDir" />-->
+    <UIRef Id="WixUI_ErrorProgressText" />
 
-        <!--Run the Installed Application After Setup-->
-        <Property Id="WixShellExecTarget" Value="[#PowerEconomizer.exe]" />
-        <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
-        <UI>
-            <Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
-        </UI>
-    </Product>
+    <!--Run the Installed Application After Setup-->
+    <Property Id="WixShellExecTarget" Value="[#PowerEconomizer.exe]" />
+    <CustomAction Id="LaunchApplication" DllEntry="WixShellExec" Impersonate="yes" BinaryRef="Wix4UtilCA_X86" />
+    <UI>
+      <Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchApplication" Condition="WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed" />
+    </UI>
+  </Package>
 
-    <Fragment>
-        <Directory Id="TARGETDIR" Name="SourceDir">
-            <Directory Id="$(var.PlatformProgramFilesFolder)">
-                <Directory Id="ManufacturerFolder" Name="$(var.Manufacturer)">
-                    <Directory Id="INSTALLFOLDER" Name="$(var.ProductId)" />
-                </Directory>
-            </Directory>
+  <Fragment>
+    <StandardDirectory Id="ProgramFiles6432Folder">
+      <Directory Id="ManufacturerFolder" Name="$(var.Manufacturer)">
+        <Directory Id="INSTALLFOLDER" Name="$(var.ProductId)" />
+      </Directory>
+    </StandardDirectory>
 
-            <Directory Id="DesktopFolder" />
+    <StandardDirectory Id="DesktopFolder" />
 
-            <!-- Create a Shortcut on the Start Menu Step 1: Define the directory structure -->
-            <Directory Id="ProgramMenuFolder">
-                <Directory Id="StartMenuProductFolder" Name="!(loc.ProductName)" />
-            </Directory>
+    <!-- Create a Shortcut on the Start Menu Step 1: Define the directory structure -->
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Directory Id="StartMenuProductFolder" Name="!(loc.ProductName)" />
+    </StandardDirectory>
 
-            <Directory Id="StartupFolder" />
-        </Directory>
-    </Fragment>
+    <StandardDirectory Id="StartupFolder" />
+  </Fragment>
 
-    <Fragment>
-        <ComponentGroup Id="ProductComponents">
-            <Component Id="ProductComponent" Directory="INSTALLFOLDER" Guid="98BD59D2-CE03-448B-A26D-2FF7766BA927" Win64="$(var.Win64)">
-                <File Name="LICENSE.rtf" Source="$(var.ProjectDir)LICENSE.rtf" />
-                <File Name="PowerEconomizer.exe" Source="$(var.ProjectDir)..\..\..\conf\PowerEconomizer.exe" />
-                <File Name="PowerEconomizer.toml" Source="$(var.ProjectDir)..\..\..\conf\PowerEconomizer.toml" />
-            </Component>
-        </ComponentGroup>
+  <Fragment>
+    <ComponentGroup Id="ProductComponents">
+      <Component Id="ProductComponent" Directory="INSTALLFOLDER" Guid="98BD59D2-CE03-448B-A26D-2FF7766BA927" Bitness="default">
+        <File Id="LICENSE.rtf" Name="LICENSE.rtf" Source="$(var.ProjectDir)LICENSE.rtf" />
+        <File Id="PowerEconomizer.exe" Name="PowerEconomizer.exe" Source="$(var.ProjectDir)..\..\..\conf\PowerEconomizer.exe" />
+        <File Id="PowerEconomizer.toml" Name="PowerEconomizer.toml" Source="$(var.ProjectDir)..\..\..\conf\PowerEconomizer.toml" />
+      </Component>
+    </ComponentGroup>
 
-        <Component Id="DesktopShortcutComponent" Directory="DesktopFolder" Guid="C4ACE547-EA7F-4A44-AD5D-238A36F69252" Win64="$(var.Win64)">
-            <Shortcut Id="DesktopShortcut"
-                      Name="!(loc.ProductName)"
-                      Description="!(loc.ProductName)"
-                      Target="[INSTALLFOLDER]PowerEconomizer.exe"
-                      WorkingDirectory="INSTALLFOLDER"/>
-            <RegistryValue Root="HKCU" Key="Software\$(var.Manufacturer)\$(var.ProductId)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
-        </Component>
+    <Component Id="DesktopShortcutComponent" Directory="DesktopFolder" Guid="C4ACE547-EA7F-4A44-AD5D-238A36F69252" Bitness="default">
+      <Shortcut Id="DesktopShortcut" Name="!(loc.ProductName)" Description="!(loc.ProductName)" Target="[INSTALLFOLDER]PowerEconomizer.exe" WorkingDirectory="INSTALLFOLDER" />
+      <RegistryValue Root="HKCU" Key="Software\$(var.Manufacturer)\$(var.ProductId)" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+    </Component>
 
-        <!-- Create a Shortcut on the Start Menu Step 2: Add the shortcut to your installer package -->
-        <Component Id="StartMenuShortcutComponent" Directory="StartMenuProductFolder" Guid="515E4FF6-96B4-41EB-BB07-6DCDEC25F586" Win64="$(var.Win64)">
-            <Shortcut Id="ApplicationStartMenuShortcut"
-                        Name="!(loc.ProductName)"
-                        Description="!(loc.ProductName)"
-                        Target="[INSTALLFOLDER]PowerEconomizer.exe"
-                        WorkingDirectory="INSTALLFOLDER"/>
-            <Shortcut Id="UninstallProduct"
-                        Name="!(loc.Uninstall)"
-                        Description="!(loc.Uninstall)"
-                        Target="$(var.SystemDir)msiexec.exe"
-                        Arguments="/x [ProductCode]"/>
-            <RemoveFolder Id="StartMenuProductFolder" On="uninstall"/>
-            <RegistryValue Root="HKCU" Key="Software\$(var.Manufacturer)\$(var.ProductId)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
-        </Component>
+    <!-- Create a Shortcut on the Start Menu Step 2: Add the shortcut to your installer package -->
+    <Component Id="StartMenuShortcutComponent" Directory="StartMenuProductFolder" Guid="515E4FF6-96B4-41EB-BB07-6DCDEC25F586" Bitness="default">
+      <Shortcut Id="ApplicationStartMenuShortcut" Name="!(loc.ProductName)" Description="!(loc.ProductName)" Target="[INSTALLFOLDER]PowerEconomizer.exe" WorkingDirectory="INSTALLFOLDER" />
+      <Shortcut Id="UninstallProduct" Name="!(loc.Uninstall)" Description="!(loc.Uninstall)" Target="$(var.SystemDir)msiexec.exe" Arguments="/x [ProductCode]" />
+      <RemoveFolder Id="StartMenuProductFolder" On="uninstall" />
+      <RegistryValue Root="HKCU" Key="Software\$(var.Manufacturer)\$(var.ProductId)" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+    </Component>
 
-        <Component Id="StartupShortcutComponent" Directory="StartupFolder" Guid="753F385C-0ED6-4399-A874-52BEF91DD205" Win64="$(var.Win64)">
-            <RegistryValue Root="HKCU" Key="Software\Microsoft\Windows\CurrentVersion\Run" Name="PowerEconomizer" Type="string" Value="&quot;[INSTALLFOLDER]PowerEconomizer.exe&quot;" KeyPath="yes"/>
-        </Component>
-    </Fragment>
+    <Component Id="StartupShortcutComponent" Directory="StartupFolder" Guid="753F385C-0ED6-4399-A874-52BEF91DD205" Bitness="default">
+      <RegistryValue Root="HKCU" Key="Software\Microsoft\Windows\CurrentVersion\Run" Name="PowerEconomizer" Type="string" Value="&quot;[INSTALLFOLDER]PowerEconomizer.exe&quot;" KeyPath="yes" />
+    </Component>
+  </Fragment>
 </Wix>
