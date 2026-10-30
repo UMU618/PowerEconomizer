@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+         xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+         xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+         xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+         xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+         IgnorableNamespaces="uap uap3 desktop rescap"
+         xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
+  <Identity Name="22026UMUTech.PowerEconomizer" Publisher="CN=A3AC9B40-C722-4AD6-B074-FCB759F2C7C4" Version="0.0.0.0" ProcessorArchitecture="x64" />
+  <Properties>
+    <DisplayName>PowerEconomizer</DisplayName>
+    <PublisherDisplayName>UMUTech</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+    <Description>PowerEconomizer - a power saver by UMUTech</Description>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.21359.0" MaxVersionTested="10.0.26100.0" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="en-US" />
+    <Resource Language="zh-CN" />
+  </Resources>
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+  <Applications>
+    <Application Id="PowerEconomizer" Executable="PowerEconomizer.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements DisplayName="PowerEconomizer" Description="PowerEconomizer" BackgroundColor="transparent" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\Square71x71Logo.png" Square310x310Logo="Assets\Square310x310Logo.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap3:Extension Category="windows.appExecutionAlias">
+          <uap3:AppExecutionAlias>
+            <desktop:ExecutionAlias Alias="PowerEconomizer.exe" />
+          </uap3:AppExecutionAlias>
+        </uap3:Extension>
+        <desktop:Extension Category="windows.startupTask" Executable="PowerEconomizer.exe" EntryPoint="Windows.FullTrustApplication">
+          <desktop:StartupTask TaskId="PowerEconomizerStartup" Enabled="true" DisplayName="PowerEconomizer" />
+        </desktop:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+</Package>
