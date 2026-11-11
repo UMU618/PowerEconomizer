@@ -1,2 +1,4 @@
 *               text=auto
+*.slnx          text eol=crlf
+*.vcxproj       text eol=crlf
 *.wixproj       text eol=crlf

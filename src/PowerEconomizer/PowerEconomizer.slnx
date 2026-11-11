@@ -1,0 +1,10 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="MTRelease" />
+    <BuildType Name="Release" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="PowerEconomizer/PowerEconomizer.vcxproj" Id="13ee1ee9-df93-46d7-b742-1beb7f8436ce" />
+</Solution>

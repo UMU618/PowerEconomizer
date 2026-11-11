@@ -6,5 +6,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="PowerEconomizerDemo/PowerEconomizerDemo.vcxproj" />
+  <Project Path="PowerEconomizerDemo/PowerEconomizerDemo.vcxproj" Id="0e52dc1e-6c7c-4b84-af67-6e6389a6d910" />
 </Solution>
